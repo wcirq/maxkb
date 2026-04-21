@@ -24,7 +24,14 @@ router.beforeEach(
       next()
       return
     }
-    const { chatUser } = useStore()
+    const { chatUser, theme } = useStore()
+    if (!theme.themeInfo) {
+      try {
+        await theme.theme()
+      } catch (e) {
+        theme.setTheme()
+      }
+    }
     if (['login', 'chat'].includes(to.name ? to.name.toString() : '')) {
       chatUser.setAccessToken(to.params.accessToken.toString())
     } else {

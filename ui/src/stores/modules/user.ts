@@ -144,9 +144,9 @@ const useUserStore = defineStore('user', {
             this.version = ok.data.version
             this.rasKey = ok.data.ras
             const theme = useThemeStore()
-            if (this.isEE() || this.isPE()) {
+            try {
               await theme.theme()
-            } else {
+            } catch (e) {
               theme.setTheme()
               theme.themeInfo = {
                 ...defaultPlatformSetting,

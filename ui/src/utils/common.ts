@@ -27,10 +27,20 @@ export function filesize(size: number) {
 }
 
 // 头像
-export const defaultIcon = '/${window.MaxKB.prefix}/favicon.ico'
+export const defaultIcon = `${window.MaxKB?.prefix || ''}/favicon.ico`
+
+export function getDefaultIconUrl() {
+  if (typeof document !== 'undefined') {
+    const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement | null
+    if (link?.href) {
+      return link.href
+    }
+  }
+  return defaultIcon
+}
 
 export function isAppIcon(url: string | undefined) {
-  return url === defaultIcon ? '' : url
+  return url === defaultIcon || url === getDefaultIconUrl() ? '' : url
 }
 
 export function isFunction(fn: any) {
@@ -201,6 +211,9 @@ export function getFileUrl(fileId?: string) {
 
 export const resetUrl = (url: string, defaultUrl?: string) => {
   if (url && url.startsWith('./')) {
+    if (url === './favicon.ico') {
+      return getDefaultIconUrl()
+    }
     return `${window.MaxKB.prefix}/${url.substring(2)}`
   }
   return url ? url : defaultUrl ? defaultUrl : ''

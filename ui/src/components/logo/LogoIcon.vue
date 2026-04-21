@@ -1,6 +1,7 @@
 <template>
+  <img v-if="theme.themeInfo?.icon" :src="fileURL" :height="height" />
   <svg
-    v-if="!isDefaultTheme"
+    v-else-if="!isDefaultTheme"
     :class="!isDefaultTheme ? 'custom-logo-color' : ''"
     :height="height"
     xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +36,7 @@
   <img v-else src="@/assets/logo/logo.png" :height="height" />
 </template>
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import useStore from '@/stores'
 defineOptions({ name: 'LogoIcon' })
 
@@ -48,6 +49,16 @@ defineProps({
 const { theme } = useStore()
 const isDefaultTheme = computed(() => {
   return theme.isDefaultTheme()
+})
+
+const fileURL = computed(() => {
+  if (theme.themeInfo?.icon) {
+    if (typeof theme.themeInfo.icon === 'string') {
+      return theme.themeInfo.icon
+    }
+    return URL.createObjectURL(theme.themeInfo.icon)
+  }
+  return ''
 })
 </script>
 <style lang="scss" scoped>

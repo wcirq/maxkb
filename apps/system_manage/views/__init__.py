@@ -8,6 +8,7 @@
 """
 from .user_resource_permission import *
 from .email_setting import *
+from .display_setting import *
 from .system_profile import *
 from .valid import *
 from .resource_mapping import *

@@ -546,7 +546,7 @@ const systemRouter = {
           new ComplexPermission(
             [RoleConst.ADMIN],
             [PermissionConst.APPEARANCE_SETTINGS_READ],
-            [EditionConst.IS_EE, EditionConst.IS_PE],
+            [],
             'OR',
           ),
           new ComplexPermission(
@@ -572,7 +572,7 @@ const systemRouter = {
               new ComplexPermission(
                 [RoleConst.ADMIN],
                 [PermissionConst.APPEARANCE_SETTINGS_READ],
-                [EditionConst.IS_EE, EditionConst.IS_PE],
+                [],
                 'OR',
               ),
             ],
