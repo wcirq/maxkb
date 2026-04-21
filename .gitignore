@@ -138,6 +138,7 @@ celerybeat.pid
 .env
 .venv
 .codex
+.runtime
 # env/
 venv/
 # ENV/
