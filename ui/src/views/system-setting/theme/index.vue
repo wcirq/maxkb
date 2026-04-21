@@ -298,7 +298,7 @@ const themeForm = ref<any>({
   icon: '',
   loginLogo: '',
   loginImage: '',
-  title: 'MaxKB',
+  title: '智能体平台',
   slogan: t('theme.defaultSlogan'),
   ...defaultPlatformSetting,
 })
@@ -360,8 +360,17 @@ const updateTheme = async (formEl: FormInstance | undefined, test?: string) => {
   await formEl.validate((valid, fields) => {
     if (valid) {
       const fd = new FormData()
-      Object.keys(themeForm.value).map((item) => {
-        fd.append(item, themeForm.value[item])
+      Object.keys(themeForm.value).forEach((item) => {
+        const value = themeForm.value[item]
+        if (['icon', 'loginLogo', 'loginImage'].includes(item)) {
+          if (value instanceof File || value instanceof Blob) {
+            fd.append(item, value)
+          }
+          return
+        }
+        if (value !== undefined && value !== null) {
+          fd.append(item, value)
+        }
       })
       ThemeApi.postThemeInfo(fd, loading).then((res) => {
         theme.theme()

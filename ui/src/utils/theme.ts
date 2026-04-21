@@ -37,7 +37,7 @@ export const defaultSetting = {
   icon: '',
   loginLogo: '',
   loginImage: '',
-  title: 'MaxKB',
+  title: '智能体平台',
   slogan: t('theme.defaultSlogan'),
 }
 
