@@ -203,7 +203,7 @@ import StatisticsCharts from './component/StatisticsCharts.vue'
 import { nowDate, beforeDay } from '@/utils/time'
 import { MsgSuccess, MsgConfirm } from '@/utils/message'
 import { copyClick } from '@/utils/clipboard'
-import { resetUrl } from '@/utils/common'
+import { getChatBaseUrl, getChatOrigin, resetUrl } from '@/utils/common'
 import { mapToUrlParams } from '@/utils/application'
 import { t } from '@/locales'
 import { EditionConst } from '@/utils/permission/data'
@@ -227,9 +227,9 @@ const permissionPrecise = computed(() => {
   return permissionMap['application'][apiType.value]
 })
 
-const apiUrl = window.location.origin + `${window.MaxKB.chatPrefix}/api-doc/`
+const apiUrl = getChatOrigin() + `${window.MaxKB.chatPrefix}/api-doc/`
 
-const baseUrl = window.location.origin + `${window.MaxKB.chatPrefix}/api/`
+const baseUrl = getChatOrigin() + `${window.MaxKB.chatPrefix}/api/`
 
 const APIKeyDialogRef = ref()
 const EmbedDialogRef = ref()
@@ -243,10 +243,7 @@ const urlParams = computed(() =>
   mapToUrlParams(apiInputParams.value) ? '?' + mapToUrlParams(apiInputParams.value) : '',
 )
 const shareUrl = computed(
-  () =>
-    `${window.location.origin}${window.MaxKB.chatPrefix}/` +
-    accessToken.value?.access_token +
-    urlParams.value,
+  () => `${getChatBaseUrl()}/` + accessToken.value?.access_token + urlParams.value,
 )
 
 const dayOptions = [

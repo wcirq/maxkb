@@ -175,6 +175,23 @@ export function getNormalizedUrl(url: string) {
   return url
 }
 
+export function getChatOrigin() {
+  const chatOrigin = import.meta.env.VITE_CHAT_ORIGIN?.trim()
+  if (chatOrigin) {
+    return chatOrigin.replace(/\/$/, '')
+  }
+  const currentUrl = new URL(window.location.origin)
+  if (import.meta.env.DEV && currentUrl.port === '3000') {
+    currentUrl.port = '3001'
+  }
+  return currentUrl.origin
+}
+
+export function getChatBaseUrl() {
+  const chatPrefix = window.MaxKB.chatPrefix ? window.MaxKB.chatPrefix : window.MaxKB.prefix
+  return `${getChatOrigin()}${chatPrefix}`
+}
+
 export function getFileUrl(fileId?: string) {
   if (fileId) {
     return `${window.MaxKB.prefix}/oss/file/${fileId}`

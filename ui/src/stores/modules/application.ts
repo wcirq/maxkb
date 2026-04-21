@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
+import { getChatBaseUrl } from '@/utils/common'
 const useApplicationStore = defineStore('application', {
   state: () => ({
-    location: `${window.location.origin}${window.MaxKB.chatPrefix ? window.MaxKB.chatPrefix : window.MaxKB.prefix}/`,
+    location: `${getChatBaseUrl()}/`,
   }),
   actions: {},
 })

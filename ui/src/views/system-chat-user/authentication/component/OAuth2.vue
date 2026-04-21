@@ -110,6 +110,7 @@ import authApi from '@/api/chat-user/auth-setting'
 import type { FormInstance, FormRules } from 'element-plus'
 import { t } from '@/locales'
 import { MsgSuccess } from '@/utils/message'
+import { getChatBaseUrl } from '@/utils/common'
 import { PermissionConst, RoleConst } from '@/utils/permission/data'
 import { ComplexPermission } from '@/utils/permission/type'
 
@@ -209,7 +210,7 @@ function getDetail() {
       form.value = res.data
     }
     if (!form.value.config.redirectUrl) {
-      form.value.config.redirectUrl = window.location.origin + window.MaxKB.chatPrefix + '/api/auth/oauth2'
+      form.value.config.redirectUrl = getChatBaseUrl() + '/api/auth/oauth2'
     }
   })
 }

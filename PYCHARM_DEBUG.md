@@ -74,7 +74,7 @@ CREATE DATABASE "maxkb";
 
 CREATE EXTENSION "vector";
 ```
-
+docc    
 ### maxkb-redis 实际配置
 
 - 镜像：`redis:7`
@@ -263,6 +263,62 @@ PYTHONUNBUFFERED=1 \
 ```text
 http://127.0.0.1:8080
 ```
+
+## Local Model 服务启动
+
+知识库检索、向量化和部分本地模型能力，不走上面的 `8080` Web 服务，而是单独请求本地模型服务：
+
+- Host: `127.0.0.1`
+- Port: `11636`
+- 配置来源：根目录 `config.yml` 中的 `LOCAL_MODEL_HOST`、`LOCAL_MODEL_PORT`
+
+如果只启动了 `SERVER_NAME=web` 的 Django，而没有启动本地模型服务，知识库相关操作会报类似错误：
+
+```text
+HTTPConnectionPool(host='127.0.0.1', port=11636): Max retries exceeded
+```
+
+### 推荐启动方式
+
+```bash
+MAXKB_CONFIG=1 \
+MAXKB_LOG_DIR=/media/wcirq/data1/develop/big_model/MaxKB/.runtime/logs \
+HF_HOME=/media/wcirq/data1/develop/big_model/MaxKB/.runtime/hf_home \
+TMPDIR=/media/wcirq/data1/develop/big_model/MaxKB/.runtime/tmp \
+TIKTOKEN_CACHE_DIR=/media/wcirq/data1/develop/big_model/MaxKB/.runtime/tiktoken \
+SERVER_NAME=local_model \
+PYTHONUNBUFFERED=1 \
+./.venv/bin/python main.py dev local_model
+```
+
+访问地址：
+
+```text
+http://127.0.0.1:11636/admin/api/
+```
+
+### PyCharm Local Model 配置
+
+新建第二个 `Python` 运行配置，填写：
+
+- Name: `MaxKB Local Model`
+- Script path: `/media/wcirq/data1/develop/big_model/MaxKB/main.py`
+- Parameters: `dev local_model`
+- Python interpreter: `/media/wcirq/data1/develop/big_model/MaxKB/.venv/bin/python`
+- Working directory: `/media/wcirq/data1/develop/big_model/MaxKB`
+
+Environment variables：
+
+```text
+MAXKB_CONFIG=1;MAXKB_LOG_DIR=/media/wcirq/data1/develop/big_model/MaxKB/.runtime/logs;HF_HOME=/media/wcirq/data1/develop/big_model/MaxKB/.runtime/hf_home;TMPDIR=/media/wcirq/data1/develop/big_model/MaxKB/.runtime/tmp;TIKTOKEN_CACHE_DIR=/media/wcirq/data1/develop/big_model/MaxKB/.runtime/tiktoken;SERVER_NAME=local_model;PYTHONUNBUFFERED=1
+```
+
+本地联调知识库时，通常至少要同时启动这四部分：
+
+- PostgreSQL
+- Redis
+- Web 服务 `8080`
+- Local Model 服务 `11636`
 
 ### 可选启动方式
 

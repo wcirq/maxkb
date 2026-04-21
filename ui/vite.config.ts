@@ -97,6 +97,7 @@ export default defineConfig((conf: any) => {
       host: '0.0.0.0',
       port: Number(ENV.VITE_APP_PORT),
       strictPort: true,
+      allowedHosts: ['js.wcirq.com'],
       proxy: proxyConf,
     },
     build: {

@@ -54,6 +54,7 @@ import { reactive, ref } from 'vue'
 import { ElForm } from 'element-plus'
 import platformApi from '@/api/chat-user/auth-setting.ts'
 import { MsgError, MsgSuccess } from '@/utils/message'
+import { getChatBaseUrl } from '@/utils/common'
 import { t } from '@/locales'
 
 const visible = ref(false)
@@ -154,7 +155,7 @@ const open = async (platform: Platform) => {
   Object.assign(currentPlatform, platform)
 
   // 设置默认的 callback_url
-  const defaultCallbackUrl = window.location.origin + window.MaxKB.chatPrefix + '/api'
+  const defaultCallbackUrl = getChatBaseUrl() + '/api'
   switch (platform.key) {
     case 'wecom':
       if (currentPlatform.config.app_key) {

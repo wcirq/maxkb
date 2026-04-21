@@ -168,6 +168,7 @@ import useStore from '@/stores'
 import { WorkFlowInstance } from '@/workflow/common/validate'
 import { hasPermission } from '@/utils/permission'
 import { t } from '@/locales'
+import { getChatBaseUrl } from '@/utils/common'
 import { ComplexPermission } from '@/utils/permission/type'
 import { EditionConst, PermissionConst, RoleConst } from '@/utils/permission/data'
 import permissionMap from '@/permission'
@@ -221,10 +222,7 @@ const urlParams = computed(() =>
   mapToUrlParams(apiInputParams.value) ? '?' + mapToUrlParams(apiInputParams.value) : '',
 )
 const shareUrl = computed(
-  () =>
-    `${window.location.origin}${window.MaxKB.chatPrefix}/` +
-    detail.value?.access_token +
-    urlParams.value,
+  () => `${getChatBaseUrl()}/` + detail.value?.access_token + urlParams.value,
 )
 
 function back() {
